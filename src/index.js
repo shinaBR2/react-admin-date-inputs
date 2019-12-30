@@ -82,7 +82,7 @@ const makePicker = PickerComponent => {
 
     _makePicker.defaultProps = {
         input: {},
-        isRequired: 'false',
+        isRequired: false,
         label: '',
         meta: {touched: false, error: false},
         options: {},
