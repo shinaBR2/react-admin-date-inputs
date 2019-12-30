@@ -11,7 +11,7 @@ import {
 import DateFnsUtils from '@date-io/date-fns';
 
 const makePicker = PickerComponent => {
-    return props => {
+    const _makePicker = props => {
         const {
             id,
             input,
@@ -62,39 +62,41 @@ const makePicker = PickerComponent => {
               </MuiPickersUtilsProvider>
           </div>
         );
-    }
-};
+    };
 
-makePicker.propTypes = {
-    input: PropTypes.object,
-    isRequired: PropTypes.bool,
-    label: PropTypes.string,
-    meta: PropTypes.object,
-    options: PropTypes.object,
-    resource: PropTypes.string,
-    source: PropTypes.string,
-    labelTime: PropTypes.string,
-    className: PropTypes.string,
-    providerOptions: PropTypes.shape({
-        utils: PropTypes.func,
-        locale: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    }),
-};
+    _makePicker.propTypes = {
+        input: PropTypes.object,
+        isRequired: PropTypes.bool,
+        label: PropTypes.string,
+        meta: PropTypes.object,
+        options: PropTypes.object,
+        resource: PropTypes.string,
+        source: PropTypes.string,
+        labelTime: PropTypes.string,
+        className: PropTypes.string,
+        providerOptions: PropTypes.shape({
+            utils: PropTypes.func,
+            locale: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+        }),
+    };
 
-makePicker.defaultProps = {
-    input: {},
-    isRequired: 'false',
-    label: '',
-    meta: {touched: false, error: false},
-    options: {},
-    resource: '',
-    source: '',
-    labelTime: '',
-    className: '',
-    providerOptions: {
-        utils: DateFnsUtils,
-        locale: undefined,
-    },
+    _makePicker.defaultProps = {
+        input: {},
+        isRequired: 'false',
+        label: '',
+        meta: {touched: false, error: false},
+        options: {},
+        resource: '',
+        source: '',
+        labelTime: '',
+        className: '',
+        providerOptions: {
+            utils: DateFnsUtils,
+            locale: undefined,
+        },
+    };
+    
+    return _makePicker;
 };
 
 export const DateInput = makePicker(DatePicker);
