@@ -30,9 +30,9 @@ const makePicker = PickerComponent => {
             providerOptions
         } = props;
 
-        const onChange = (date) => {
-            props.input.onChange(date);
-            props.input.onBlur();
+        const onChange = date => {
+            input.onChange(date);
+            input.onBlur();
         };
 
         return (
