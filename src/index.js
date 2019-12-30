@@ -90,4 +90,4 @@ const makePicker = (PickerComponent) => {
 export const DateInput = addField(makePicker(DatePicker));
 export const TimeInput = addField(makePicker(TimePicker));
 export const DateTimeInput = addField(makePicker(DateTimePicker));
-export const KeyboardDatePicker = addField(makePicker(KeyboardDatePicker));
+export const KeyboardDateInput = addField(makePicker(KeyboardDatePicker));
