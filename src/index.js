@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {addField, FieldTitle} from 'ra-core';
+import {useInput, FieldTitle} from 'ra-core';
 import {
     DatePicker,
     TimePicker,
@@ -19,34 +19,44 @@ const makePicker = PickerComponent => {
 
         render() {
             const {
-                input,
                 options,
                 label,
                 source,
                 resource,
-                isRequired,
                 className,
-                meta,
+                margin,
+                variant,
                 providerOptions,
             } = this.props;
 
-            const {touched, error} = meta;
+            const {
+                id,
+                input,
+                isRequired,
+                meta: { touched, error },
+            } = useInput(this.props);
 
             return (
               <div className="picker">
                   <MuiPickersUtilsProvider {...providerOptions}>
                       <PickerComponent
-                        {...options}
+                        id={id}
+                        {...input}
                         label={<FieldTitle
                           label={label}
                           source={source}
                           resource={resource}
                           isRequired={isRequired}
                         />}
-                        margin="normal"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        {...options}
+                        variant={variant}
+                        margin={margin}
                         error={!!(touched && error)}
                         helperText={touched && error}
-                        ref={(node) => {
+                        ref={node => {
                             this.picker = node;
                         }}
                         className={className}
@@ -93,7 +103,7 @@ const makePicker = PickerComponent => {
     return _makePicker;
 };
 
-export const DateInput = addField(makePicker(DatePicker));
-export const TimeInput = addField(makePicker(TimePicker));
-export const DateTimeInput = addField(makePicker(DateTimePicker));
-export const KeyboardDateInput = addField(makePicker(KeyboardDatePicker));
+export const DateInput = makePicker(DatePicker);
+export const TimeInput = makePicker(TimePicker);
+export const DateTimeInput = makePicker(DateTimePicker);
+export const KeyboardDateInput = makePicker(KeyboardDatePicker);
