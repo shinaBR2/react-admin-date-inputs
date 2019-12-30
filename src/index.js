@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { addField, FieldTitle } from 'ra-core';
-import { DatePicker, TimePicker, DateTimePicker, MuiPickersUtilsProvider } from 'material-ui-pickers';
+import {addField, FieldTitle} from 'ra-core';
+import {DatePicker, TimePicker, DateTimePicker, KeyboardDatePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
 const makePicker = (PickerComponent) => {
@@ -9,7 +9,7 @@ const makePicker = (PickerComponent) => {
     onChange = (date) => {
       this.props.input.onChange(date);
       this.props.input.onBlur();
-    }
+    };
 
     render() {
       const {
@@ -24,7 +24,7 @@ const makePicker = (PickerComponent) => {
         providerOptions,
       } = this.props;
 
-      const { touched, error } = meta;
+      const {touched, error} = meta;
 
       return (
         <div className="picker">
@@ -40,7 +40,9 @@ const makePicker = (PickerComponent) => {
               margin="normal"
               error={!!(touched && error)}
               helperText={touched && error}
-              ref={(node) => { this.picker = node; }}
+              ref={(node) => {
+                this.picker = node;
+              }}
               className={className}
               value={input.value ? input.value : null}
               onChange={this.onChange}
@@ -50,6 +52,7 @@ const makePicker = (PickerComponent) => {
       );
     }
   }
+
   _makePicker.propTypes = {
     input: PropTypes.object,
     isRequired: PropTypes.bool,
@@ -70,7 +73,7 @@ const makePicker = (PickerComponent) => {
     input: {},
     isRequired: 'false',
     label: '',
-    meta: { touched: false, error: false },
+    meta: {touched: false, error: false},
     options: {},
     resource: '',
     source: '',
@@ -87,3 +90,4 @@ const makePicker = (PickerComponent) => {
 export const DateInput = addField(makePicker(DatePicker));
 export const TimeInput = addField(makePicker(TimePicker));
 export const DateTimeInput = addField(makePicker(DateTimePicker));
+export const KeyboardDatePicker = addField(makePicker(KeyboardDatePicker));
