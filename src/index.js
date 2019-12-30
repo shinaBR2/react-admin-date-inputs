@@ -30,9 +30,9 @@ const makePicker = PickerComponent => {
             providerOptions
         } = props;
 
-        const onChange = date => {
-            input.onChange(date);
-            input.onBlur();
+        const onChange = (date, value) => {
+            input.onChange && input.onChange(date);
+            input.onBlur && input.onBlur();
         };
 
         return (
@@ -68,6 +68,8 @@ const makePicker = PickerComponent => {
         input: PropTypes.object,
         isRequired: PropTypes.bool,
         label: PropTypes.string,
+        onChange: PropTypes.func.isRequired,
+        value: PropTypes.any.isRequired,
         meta: PropTypes.object,
         options: PropTypes.object,
         resource: PropTypes.string,
@@ -88,6 +90,7 @@ const makePicker = PickerComponent => {
         options: {},
         resource: '',
         source: '',
+        value: '',
         labelTime: '',
         className: '',
         providerOptions: {
@@ -95,7 +98,7 @@ const makePicker = PickerComponent => {
             locale: undefined,
         },
     };
-    
+
     return _makePicker;
 };
 
