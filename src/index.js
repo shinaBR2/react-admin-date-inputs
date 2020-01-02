@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {useInput, useTranslate, FieldTitle} from 'ra-core';
 import {InputHelperText} from 'ra-ui-materialui';
@@ -55,8 +55,8 @@ const makePicker = PickerComponent => {
         validate,
         variant = 'filled',
         defaultValue,
-        providerOptions,
-        pickerVariant = "dialog",
+        providerOptions: {utils, locale},
+        pickerVariant = 'dialog',
         value,
         ...rest
     }) => {
@@ -78,8 +78,9 @@ const makePicker = PickerComponent => {
             /* type: 'datetime-local', */
             ...rest,
         });
+
         return (
-          <MuiPickersUtilsProvider {...providerOptions}>
+          <MuiPickersUtilsProvider utils={utils || DateFnsUtils} locale={locale}>
               <PickerComponent
                 id={id}
                 {...input}
