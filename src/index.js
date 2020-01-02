@@ -56,10 +56,11 @@ const makePicker = PickerComponent => {
         variant = 'filled',
         defaultValue,
         providerOptions,
+        pickerVariant = "dialog",
+        value,
         ...rest
     }) => {
         const translate = useTranslate();
-        const [selectedDate, handleDateChange] = useState(new Date());
         const {
             id,
             input,
@@ -77,7 +78,6 @@ const makePicker = PickerComponent => {
             /* type: 'datetime-local', */
             ...rest,
         });
-        
         return (
           <MuiPickersUtilsProvider {...providerOptions}>
               <PickerComponent
@@ -93,8 +93,7 @@ const makePicker = PickerComponent => {
                     shrink: true,
                 }}
                 {...options}
-                /* variant={"dialog" | "inline" | "static"} */
-                /* inputVariant={"standard" | "outlined" | "filled"} */
+                variant={pickerVariant}
                 inputVariant={variant}
                 margin={margin}
                 error={!!(touched && error)}
@@ -107,14 +106,8 @@ const makePicker = PickerComponent => {
                       />
                     ) : null
                 }
-                value={selectedDate ? new Date(selectedDate) : null}
-                onBlur={() => onBlur(selectedDate ? new Date(selectedDate).toISOString() : null)}
-                onChange={handleDateChange}
-                onAccept={onChange}
                 clearLabel={translate('ra.action.clear_input_value')}
                 cancelLabel={translate('ra.action.cancel')}
-                /* okLabel={translate('ra.action.ok')} */
-                /* todayLabel={translate('ra.date.today')} */
                 {...sanitizeRestProps(rest)}
               />
           </MuiPickersUtilsProvider>
