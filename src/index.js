@@ -8,7 +8,9 @@ import {
     TimePicker,
     DateTimePicker,
     KeyboardDatePicker,
-    MuiPickersUtilsProvider
+    KeyboardDateTimePicker,
+    KeyboardTimePicker,
+    MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
@@ -155,3 +157,5 @@ export const DateInput = makePicker(DatePicker);
 export const TimeInput = makePicker(TimePicker);
 export const DateTimeInput = makePicker(DateTimePicker);
 export const KeyboardDateInput = makePicker(KeyboardDatePicker);
+export const KeyboardDateTimeInput = makePicker(KeyboardDateTimePicker);
+export const KeyboardTimInput = makePicker(KeyboardTimePicker);
