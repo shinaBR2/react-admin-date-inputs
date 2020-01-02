@@ -1,6 +1,6 @@
 # react-admin-date-inputs
 
-\<DateInput>, \<TimeInput>, \<DateTimeInput> and \<KeyboardDateInput/> components for [React-Admin](https://github.com/marmelab/react-admin).
+\<DateInput>, \<TimeInput>, \<DateTimeInput> \<KeyboardDateInput/>, \<KeyboardDateTimeInput/> and <KeyboardTimeInput/> components for [React-Admin](https://github.com/marmelab/react-admin).
 
 ![date-time-picker.gif](date-time-picker.gif)
 
