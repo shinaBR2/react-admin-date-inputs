@@ -68,7 +68,6 @@ const makePicker = PickerComponent => {
             isRequired,
             meta: {error, touched},
         } = useInput({
-            /* format, */
             onBlur,
             onChange,
             onFocus,
@@ -94,6 +93,7 @@ const makePicker = PickerComponent => {
                     shrink: true,
                 }}
                 {...options}
+                format={format}
                 variant={pickerVariant}
                 inputVariant={variant}
                 margin={margin}
