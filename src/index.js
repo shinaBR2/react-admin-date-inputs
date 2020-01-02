@@ -57,7 +57,6 @@ const makePicker = PickerComponent => {
         defaultValue,
         providerOptions: {utils, locale},
         pickerVariant = 'dialog',
-        value,
         ...rest
     }) => {
         const translate = useTranslate();
@@ -83,7 +82,6 @@ const makePicker = PickerComponent => {
           <MuiPickersUtilsProvider utils={utils || DateFnsUtils} locale={locale}>
               <PickerComponent
                 id={id}
-                {...input}
                 label={<FieldTitle
                   label={label}
                   source={source}
@@ -110,6 +108,7 @@ const makePicker = PickerComponent => {
                 clearLabel={translate('ra.action.clear_input_value')}
                 cancelLabel={translate('ra.action.cancel')}
                 {...sanitizeRestProps(rest)}
+                {...input}
               />
           </MuiPickersUtilsProvider>
         );
