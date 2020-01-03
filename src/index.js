@@ -43,7 +43,7 @@ const sanitizeRestProps = ({
 
 const makePicker = PickerComponent => {
     const _makePicker = ({
-        format = 'yyyy/MM/dd',
+        format,
         label,
         options,
         source,
@@ -68,6 +68,7 @@ const makePicker = PickerComponent => {
             isRequired,
             meta: {error, touched},
         } = useInput({
+            format,
             onBlur,
             onChange,
             onFocus,
@@ -94,7 +95,6 @@ const makePicker = PickerComponent => {
                         shrink: true,
                     }}
                     {...options}
-                    format={format}
                     variant={pickerVariant}
                     inputVariant={variant}
                     margin={margin}
