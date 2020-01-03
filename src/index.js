@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import { useInput, useTranslate, FieldTitle } from 'ra-core';
 import { InputHelperText } from 'ra-ui-materialui';
@@ -80,6 +80,10 @@ const makePicker = PickerComponent => {
             ...rest,
         });
 
+        const handleChange = useCallback(value => {
+            Date.parse(value) ? input.onChange(value.toISOString()) : input.onChange(null);
+        }, []);
+
         return (
           <div className="picker">
               <MuiPickersUtilsProvider utils={utils || DateFnsUtils} locale={locale}>
@@ -111,7 +115,9 @@ const makePicker = PickerComponent => {
                     clearLabel={translate('ra.action.clear_input_value')}
                     cancelLabel={translate('ra.action.cancel')}
                     {...sanitizeRestProps(rest)}
-                    {...input}
+                    value={input.value ? new Date(input.value) : null}
+                    onChange={date => handleChange(date)}
+                    onBlur={() => input.onBlur(input.value ? new Date(input.value).toISOString() : null)}
                   />
               </MuiPickersUtilsProvider>
           </div>
