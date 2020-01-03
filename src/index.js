@@ -14,6 +14,44 @@ import {
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
+/**
+ * Convert Date object to String
+ *
+ * @param {Date} value value to convert
+ * @returns {String} A standardized date (yyyy-MM-dd), to be passed to an <input type="date" />
+ */
+const convertDateToString = (value) => {
+    if (!(value instanceof Date) || isNaN(value.getDate())) {
+        return;
+    }
+    const pad = '00';
+    const yyyy = value.getFullYear().toString();
+    const MM = (value.getMonth() + 1).toString();
+    const dd = value.getDate().toString();
+    return `${yyyy}-${(pad + MM).slice(-2)}-${(pad + dd).slice(-2)}`;
+};
+
+const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+
+const getStringFromDate = (value) => {
+    // null, undefined and empty string values should not go through dateFormatter
+    // otherwise, it returns undefined and will make the input an uncontrolled one.
+    if (value == null || value === '') {
+        return '';
+    }
+
+    if (value instanceof Date) {
+        return convertDateToString(value);
+    }
+
+    // valid dates should not be converted
+    if (dateRegex.test(value)) {
+        return value;
+    }
+
+    return convertDateToString(new Date(value));
+};
+
 const sanitizeRestProps = ({
     allowEmpty,
     alwaysOn,
@@ -43,7 +81,7 @@ const sanitizeRestProps = ({
 
 const makePicker = PickerComponent => {
     const _makePicker = ({
-        format,
+        format = getStringFromDate,
         label,
         options,
         source,
@@ -81,7 +119,7 @@ const makePicker = PickerComponent => {
         });
 
         const handleChange = useCallback(value => {
-            Date.parse(value) ? input.onChange(value.toISOString()) : input.onChange(null);
+            Date.parse(value) ? input.onChange(format(value)) : input.onChange(null);
         }, []);
 
         return (
@@ -98,7 +136,6 @@ const makePicker = PickerComponent => {
                     InputLabelProps={{
                         shrink: true,
                     }}
-                    {...options}
                     variant={pickerVariant}
                     inputVariant={variant}
                     margin={margin}
@@ -114,10 +151,11 @@ const makePicker = PickerComponent => {
                     }
                     clearLabel={translate('ra.action.clear_input_value')}
                     cancelLabel={translate('ra.action.cancel')}
+                    {...options}
                     {...sanitizeRestProps(rest)}
-                    value={input.value ? new Date(input.value) : null}
+                    value={input.value}
                     onChange={date => handleChange(date)}
-                    onBlur={() => input.onBlur(input.value ? new Date(input.value).toISOString() : null)}
+                    onBlur={() => input.onBlur(input.value ? format(new Date(input.value)) : null)}
                   />
               </MuiPickersUtilsProvider>
           </div>
