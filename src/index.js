@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {useInput, useTranslate, FieldTitle} from 'ra-core';
-import {InputHelperText} from 'ra-ui-materialui';
+import { useInput, useTranslate, FieldTitle } from 'ra-core';
+import { InputHelperText } from 'ra-ui-materialui';
 
 import {
     DatePicker,
@@ -80,39 +80,41 @@ const makePicker = PickerComponent => {
         });
 
         return (
-          <MuiPickersUtilsProvider utils={utils || DateFnsUtils} locale={locale}>
-              <PickerComponent
-                id={id}
-                label={<FieldTitle
-                  label={label}
-                  source={source}
-                  resource={resource}
-                  isRequired={isRequired}
-                />}
-                InputLabelProps={{
-                    shrink: true,
-                }}
-                {...options}
-                format={format}
-                variant={pickerVariant}
-                inputVariant={variant}
-                margin={margin}
-                error={!!(touched && error)}
-                helperText={
-                    (touched && error) || helperText ? (
-                      <InputHelperText
-                        touched={touched}
-                        error={error}
-                        helperText={helperText}
-                      />
-                    ) : null
-                }
-                clearLabel={translate('ra.action.clear_input_value')}
-                cancelLabel={translate('ra.action.cancel')}
-                {...sanitizeRestProps(rest)}
-                {...input}
-              />
-          </MuiPickersUtilsProvider>
+          <div className="picker">
+              <MuiPickersUtilsProvider utils={utils || DateFnsUtils} locale={locale}>
+                  <PickerComponent
+                    id={id}
+                    label={<FieldTitle
+                      label={label}
+                      source={source}
+                      resource={resource}
+                      isRequired={isRequired}
+                    />}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    {...options}
+                    format={format}
+                    variant={pickerVariant}
+                    inputVariant={variant}
+                    margin={margin}
+                    error={!!(touched && error)}
+                    helperText={
+                        (touched && error) || helperText ? (
+                          <InputHelperText
+                            touched={touched}
+                            error={error}
+                            helperText={helperText}
+                          />
+                        ) : null
+                    }
+                    clearLabel={translate('ra.action.clear_input_value')}
+                    cancelLabel={translate('ra.action.cancel')}
+                    {...sanitizeRestProps(rest)}
+                    {...input}
+                  />
+              </MuiPickersUtilsProvider>
+          </div>
         );
     };
 
