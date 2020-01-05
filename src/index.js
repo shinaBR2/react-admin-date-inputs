@@ -41,7 +41,7 @@ const dateTimeRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
  *
  * @param {Date | String} value date string or object
  */
-const format = (value) => {
+const dateTimeFormatter = (value) => {
     // null, undefined and empty string values should not go through convertDateToString
     // otherwise, it returns undefined and will make the input an uncontrolled one.
     if (value == null || value === '') {
@@ -66,7 +66,7 @@ const format = (value) => {
  * @param {String} value Date string, formatted as yyyy-MM-ddThh:mm
  * @return {Date}
  */
-const parse = (value) => new Date(value);
+const dateTimeParser = (value) => new Date(value);
 
 const sanitizeRestProps = ({
     allowEmpty,
@@ -74,6 +74,7 @@ const sanitizeRestProps = ({
     basePath,
     component,
     defaultValue,
+    format,
     formClassName,
     initialValue,
     initializeForm,
@@ -86,6 +87,7 @@ const sanitizeRestProps = ({
     options,
     optionText,
     optionValue,
+    parse,
     record,
     resource,
     source,
@@ -98,7 +100,7 @@ const sanitizeRestProps = ({
 
 const makePicker = PickerComponent => {
     const _makePicker = ({
-        format = format,
+        format = dateTimeFormatter,
         label,
         options,
         source,
@@ -108,7 +110,7 @@ const makePicker = PickerComponent => {
         onBlur,
         onChange,
         onFocus,
-        parse = parse,
+        parse = dateTimeParser,
         validate,
         variant = 'filled',
         defaultValue,
