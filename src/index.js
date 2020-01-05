@@ -14,27 +14,35 @@ import {
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
+const leftPad = (nb = 2) => value => ('0'.repeat(nb) + value).slice(-nb);
+const leftPad4 = leftPad(4);
+const leftPad2 = leftPad(2);
+
 /**
- * Convert Date object to String
- *
  * @param {Date} value value to convert
- * @returns {String} A standardized date (yyyy-MM-dd), to be passed to an <input type="date" />
+ * @returns {String} A standardized datetime (yyyy-MM-ddThh:mm), to be passed to an <input type="datetime-local" />
  */
 const convertDateToString = (value) => {
-    if (!(value instanceof Date) || isNaN(value.getDate())) {
-        return;
-    }
-    const pad = '00';
-    const yyyy = value.getFullYear().toString();
-    const MM = (value.getMonth() + 1).toString();
-    const dd = value.getDate().toString();
-    return `${yyyy}-${(pad + MM).slice(-2)}-${(pad + dd).slice(-2)}`;
+    if (!(value instanceof Date) || isNaN(value.getDate())) return '';
+    const yyyy = leftPad4(value.getFullYear());
+    const MM = leftPad2(value.getMonth() + 1);
+    const dd = leftPad2(value.getDate());
+    const hh = leftPad2(value.getHours());
+    const mm = leftPad2(value.getMinutes());
+    return `${yyyy}-${MM}-${dd}T${hh}:${mm}`;
 };
 
-const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+// yyyy-MM-ddThh:mm
+const dateTimeRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
 
-const getStringFromDate = (value) => {
-    // null, undefined and empty string values should not go through dateFormatter
+/**
+ * Converts a date from the Redux store, with timezone, to a date string
+ * without timezone for use in an <input type="datetime-local" />.
+ *
+ * @param {Date | String} value date string or object
+ */
+const format = (value) => {
+    // null, undefined and empty string values should not go through convertDateToString
     // otherwise, it returns undefined and will make the input an uncontrolled one.
     if (value == null || value === '') {
         return '';
@@ -43,14 +51,22 @@ const getStringFromDate = (value) => {
     if (value instanceof Date) {
         return convertDateToString(value);
     }
-
     // valid dates should not be converted
-    if (dateRegex.test(value)) {
+    if (dateTimeRegex.test(value)) {
         return value;
     }
 
     return convertDateToString(new Date(value));
 };
+
+/**
+ * Converts a datetime string without timezone to a date object
+ * with timezone, using the browser timezone.
+ *
+ * @param {String} value Date string, formatted as yyyy-MM-ddThh:mm
+ * @return {Date}
+ */
+const parse = (value) => new Date(value);
 
 const sanitizeRestProps = ({
     allowEmpty,
@@ -59,6 +75,7 @@ const sanitizeRestProps = ({
     component,
     defaultValue,
     formClassName,
+    initialValue,
     initializeForm,
     input,
     isRequired,
@@ -81,17 +98,17 @@ const sanitizeRestProps = ({
 
 const makePicker = PickerComponent => {
     const _makePicker = ({
-        format = getStringFromDate,
+        format = format,
         label,
         options,
         source,
         resource,
         helperText,
         margin = 'dense',
-        onBlur = () => null,
-        onChange = () => null,
+        onBlur,
+        onChange,
         onFocus,
-        parse,
+        parse = parse,
         validate,
         variant = 'filled',
         defaultValue,
@@ -119,7 +136,7 @@ const makePicker = PickerComponent => {
         });
 
         const handleChange = useCallback(value => {
-            Date.parse(value) ? input.onChange(format(value)) : input.onChange(null);
+            Date.parse(value) ? input.onChange(value.toISOString()) : input.onChange(null);
         }, []);
 
         return (
@@ -153,9 +170,9 @@ const makePicker = PickerComponent => {
                     cancelLabel={translate('ra.action.cancel')}
                     {...options}
                     {...sanitizeRestProps(rest)}
-                    value={input.value}
+                    value={input.value ? new Date(input.value) : null}
                     onChange={date => handleChange(date)}
-                    onBlur={() => input.onBlur(input.value ? format(new Date(input.value)) : null)}
+                    onBlur={() => input.onBlur(input.value ? new Date(input.value).toISOString() : null)}
                   />
               </MuiPickersUtilsProvider>
           </div>
@@ -187,7 +204,6 @@ const makePicker = PickerComponent => {
         options: {},
         resource: '',
         source: '',
-        value: '',
         labelTime: '',
         className: '',
         providerOptions: {
