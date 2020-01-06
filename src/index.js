@@ -66,7 +66,7 @@ const dateTimeFormatter = (value) => {
  * @param {String} value Date string, formatted as yyyy-MM-ddThh:mm
  * @return {Date}
  */
-const dateTimeParser = (value) => new Date(value);
+const dateTimeParser = (value) => value ? new Date(value) : '';
 
 const sanitizeRestProps = ({
     allowEmpty,
