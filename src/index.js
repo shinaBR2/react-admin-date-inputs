@@ -23,7 +23,9 @@ const leftPad2 = leftPad(2);
  * @returns {String} A standardized datetime (yyyy-MM-ddThh:mm), to be passed to an <input type="datetime-local" />
  */
 const convertDateToString = (value) => {
-    if (!(value instanceof Date) || isNaN(value.getDate())) return '';
+    if (!(value instanceof Date) || isNaN(value.getDate())) {
+        return '';
+    }
     const yyyy = leftPad4(value.getFullYear());
     const MM = leftPad2(value.getMonth() + 1);
     const dd = leftPad2(value.getDate());
@@ -204,7 +206,7 @@ Picker.propTypes = {
     providerOptions: PropTypes.shape({
         utils: PropTypes.func,
         locale: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    }),
+    })
 };
 
 Picker.defaultProps = {
@@ -222,9 +224,126 @@ Picker.defaultProps = {
     },
 };
 
-export const DateInput = props => <Picker PickerComponent={DatePicker} {...props} />;
-export const TimeInput = props => <Picker PickerComponent={TimePicker} {...props} />;
-export const DateTimeInput = props => <Picker PickerComponent={DateTimePicker} {...props} />;
-export const KeyboardDateInput = props => <Picker PickerComponent={KeyboardDatePicker} {...props} />;
-export const KeyboardDateTimeInput = props => <Picker PickerComponent={KeyboardDateTimePicker} {...props} />;
-export const KeyboardTimInput = props => <Picker PickerComponent={KeyboardTimePicker} {...props} />;
+const DateInput = props => <Picker PickerComponent={DatePicker} {...props} />;
+const TimeInput = props => <Picker PickerComponent={TimePicker} {...props} />;
+const DateTimeInput = props => <Picker PickerComponent={DateTimePicker} {...props} />;
+const KeyboardDateInput = props => <Picker PickerComponent={KeyboardDatePicker} {...props} />;
+const KeyboardDateTimeInput = props => <Picker PickerComponent={KeyboardDateTimePicker} {...props} />;
+const KeyboardTimInput = props => <Picker PickerComponent={KeyboardTimePicker} {...props} />;
+
+DateInput.propTypes = {
+    isRequired: PropTypes.bool,
+    label: PropTypes.string,
+    onChange: PropTypes.func,
+    meta: PropTypes.object,
+    options: PropTypes.object,
+    resource: PropTypes.string,
+    source: PropTypes.string,
+    labelTime: PropTypes.string,
+    margin: PropTypes.string,
+    variant: PropTypes.string,
+    className: PropTypes.string,
+    providerOptions: PropTypes.shape({
+        utils: PropTypes.func,
+        locale: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+    })
+};
+
+TimeInput.propTypes = {
+    isRequired: PropTypes.bool,
+    label: PropTypes.string,
+    onChange: PropTypes.func,
+    meta: PropTypes.object,
+    options: PropTypes.object,
+    resource: PropTypes.string,
+    source: PropTypes.string,
+    labelTime: PropTypes.string,
+    margin: PropTypes.string,
+    variant: PropTypes.string,
+    className: PropTypes.string,
+    providerOptions: PropTypes.shape({
+        utils: PropTypes.func,
+        locale: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+    })
+};
+
+DateTimeInput.propTypes = {
+    isRequired: PropTypes.bool,
+    label: PropTypes.string,
+    onChange: PropTypes.func,
+    meta: PropTypes.object,
+    options: PropTypes.object,
+    resource: PropTypes.string,
+    source: PropTypes.string,
+    labelTime: PropTypes.string,
+    margin: PropTypes.string,
+    variant: PropTypes.string,
+    className: PropTypes.string,
+    providerOptions: PropTypes.shape({
+        utils: PropTypes.func,
+        locale: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+    })
+};
+
+KeyboardDateInput.propTypes = {
+    isRequired: PropTypes.bool,
+    label: PropTypes.string,
+    onChange: PropTypes.func,
+    meta: PropTypes.object,
+    options: PropTypes.object,
+    resource: PropTypes.string,
+    source: PropTypes.string,
+    labelTime: PropTypes.string,
+    margin: PropTypes.string,
+    variant: PropTypes.string,
+    className: PropTypes.string,
+    providerOptions: PropTypes.shape({
+        utils: PropTypes.func,
+        locale: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+    })
+};
+
+KeyboardDateTimeInput.propTypes = {
+    isRequired: PropTypes.bool,
+    label: PropTypes.string,
+    onChange: PropTypes.func,
+    meta: PropTypes.object,
+    options: PropTypes.object,
+    resource: PropTypes.string,
+    source: PropTypes.string,
+    labelTime: PropTypes.string,
+    margin: PropTypes.string,
+    variant: PropTypes.string,
+    className: PropTypes.string,
+    providerOptions: PropTypes.shape({
+        utils: PropTypes.func,
+        locale: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+    })
+};
+
+KeyboardTimInput.propTypes = {
+    isRequired: PropTypes.bool,
+    label: PropTypes.string,
+    onChange: PropTypes.func,
+    meta: PropTypes.object,
+    options: PropTypes.object,
+    resource: PropTypes.string,
+    source: PropTypes.string,
+    labelTime: PropTypes.string,
+    margin: PropTypes.string,
+    variant: PropTypes.string,
+    className: PropTypes.string,
+    providerOptions: PropTypes.shape({
+        utils: PropTypes.func,
+        locale: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+    })
+};
+
+export {
+    DateInput,
+    TimeInput,
+    DateTimeInput,
+    KeyboardDateInput,
+    KeyboardDateTimeInput,
+    KeyboardTimInput
+};
