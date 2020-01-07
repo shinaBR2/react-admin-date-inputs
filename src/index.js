@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
-import { useInput, useTranslate, FieldTitle } from 'ra-core';
-import { InputHelperText } from 'ra-ui-materialui';
+import {useInput, useTranslate, FieldTitle} from 'ra-core';
+import {InputHelperText} from 'ra-ui-materialui';
 
 import {
     DatePicker,
@@ -98,128 +98,133 @@ const sanitizeRestProps = ({
     ...rest
 }) => rest;
 
-const makePicker = PickerComponent => {
-    const _makePicker = ({
-        format = dateTimeFormatter,
-        label,
-        options,
-        source,
-        resource,
-        helperText,
-        margin = 'dense',
+const Picker = ({
+    PickerComponent,
+    format = dateTimeFormatter,
+    label,
+    options,
+    source,
+    resource,
+    helperText,
+    margin = 'dense',
+    onBlur,
+    onChange,
+    onFocus,
+    parse = dateTimeParser,
+    validate,
+    variant = 'filled',
+    defaultValue,
+    providerOptions: {utils, locale},
+    pickerVariant = 'dialog',
+    ...rest
+}) => {
+    const translate = useTranslate();
+    const {
+        id,
+        input,
+        isRequired,
+        meta: {error, touched},
+    } = useInput({
+        format,
         onBlur,
         onChange,
         onFocus,
-        parse = dateTimeParser,
+        parse,
+        resource,
+        source,
         validate,
-        variant = 'filled',
-        defaultValue,
-        providerOptions: {utils, locale},
-        pickerVariant = 'dialog',
-        ...rest
-    }) => {
-        const translate = useTranslate();
-        const {
-            id,
-            input,
-            isRequired,
-            meta: {error, touched},
-        } = useInput({
-            format,
-            onBlur,
-            onChange,
-            onFocus,
-            parse,
-            resource,
-            source,
-            validate,
-            /* type: 'datetime-local', */
-            ...rest,
-        });
+        /* type: 'datetime-local', */
+        ...rest,
+    });
 
-        const handleChange = useCallback(value => {
-            Date.parse(value) ? input.onChange(value.toISOString()) : input.onChange(null);
-        }, []);
+    const handleChange = useCallback(value => {
+        Date.parse(value) ? input.onChange(value.toISOString()) : input.onChange(null);
+    }, []);
 
-        return (
-          <div className="picker">
-              <MuiPickersUtilsProvider utils={utils || DateFnsUtils} locale={locale}>
-                  <PickerComponent
-                    id={id}
-                    label={<FieldTitle
-                      label={label}
-                      source={source}
-                      resource={resource}
-                      isRequired={isRequired}
-                    />}
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    variant={pickerVariant}
-                    inputVariant={variant}
-                    margin={margin}
-                    error={!!(touched && error)}
-                    helperText={
-                        (touched && error) || helperText ? (
-                          <InputHelperText
-                            touched={touched}
-                            error={error}
-                            helperText={helperText}
-                          />
-                        ) : null
-                    }
-                    clearLabel={translate('ra.action.clear_input_value')}
-                    cancelLabel={translate('ra.action.cancel')}
-                    {...options}
-                    {...sanitizeRestProps(rest)}
-                    value={input.value ? new Date(input.value) : null}
-                    onChange={date => handleChange(date)}
-                    onBlur={() => input.onBlur(input.value ? new Date(input.value).toISOString() : null)}
-                  />
-              </MuiPickersUtilsProvider>
-          </div>
-        );
-    };
-
-    _makePicker.propTypes = {
-        isRequired: PropTypes.bool,
-        label: PropTypes.string,
-        onChange: PropTypes.func,
-        meta: PropTypes.object,
-        options: PropTypes.object,
-        resource: PropTypes.string,
-        source: PropTypes.string,
-        labelTime: PropTypes.string,
-        margin: PropTypes.string,
-        variant: PropTypes.string,
-        className: PropTypes.string,
-        providerOptions: PropTypes.shape({
-            utils: PropTypes.func,
-            locale: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-        }),
-    };
-
-    _makePicker.defaultProps = {
-        isRequired: false,
-        label: '',
-        meta: {touched: false, error: false},
-        options: {},
-        resource: '',
-        source: '',
-        labelTime: '',
-        className: '',
-        providerOptions: {
-            utils: DateFnsUtils,
-            locale: undefined,
-        },
-    };
-
-    return _makePicker;
+    return (
+      <div className="picker">
+          <MuiPickersUtilsProvider utils={utils || DateFnsUtils} locale={locale}>
+              <PickerComponent
+                id={id}
+                label={<FieldTitle
+                  label={label}
+                  source={source}
+                  resource={resource}
+                  isRequired={isRequired}
+                />}
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                variant={pickerVariant}
+                inputVariant={variant}
+                margin={margin}
+                error={!!(touched && error)}
+                helperText={
+                    (touched && error) || helperText ? (
+                      <InputHelperText
+                        touched={touched}
+                        error={error}
+                        helperText={helperText}
+                      />
+                    ) : null
+                }
+                clearLabel={translate('ra.action.clear_input_value')}
+                cancelLabel={translate('ra.action.cancel')}
+                {...options}
+                {...sanitizeRestProps(rest)}
+                value={input.value ? new Date(input.value) : null}
+                onChange={date => handleChange(date)}
+                onBlur={() => input.onBlur(input.value ? new Date(input.value).toISOString() : null)}
+              />
+          </MuiPickersUtilsProvider>
+      </div>
+    );
 };
 
-export const DateInput = makePicker(DatePicker);
-export const TimeInput = makePicker(TimePicker);
-export const DateTimeInput = makePicker(DateTimePicker);
-export const KeyboardDateInput = makePicker(KeyboardDatePicker);
-export const KeyboardDateTimeInput = makePicker(KeyboardDateTimePicker);
-export const KeyboardTimInput = makePicker(KeyboardTimePicker);
+Picker.propTypes = {
+    PickerComponent: PropTypes.oneOfType([
+        DatePicker,
+        TimePicker,
+        DateTimePicker,
+        KeyboardDatePicker,
+        KeyboardDateTimePicker,
+        KeyboardTimePicker
+    ]).isRequired,
+    isRequired: PropTypes.bool,
+    label: PropTypes.string,
+    onChange: PropTypes.func,
+    meta: PropTypes.object,
+    options: PropTypes.object,
+    resource: PropTypes.string,
+    source: PropTypes.string,
+    labelTime: PropTypes.string,
+    margin: PropTypes.string,
+    variant: PropTypes.string,
+    className: PropTypes.string,
+    providerOptions: PropTypes.shape({
+        utils: PropTypes.func,
+        locale: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+    }),
+};
+
+Picker.defaultProps = {
+    isRequired: false,
+    label: '',
+    meta: {touched: false, error: false},
+    options: {},
+    resource: '',
+    source: '',
+    labelTime: '',
+    className: '',
+    providerOptions: {
+        utils: DateFnsUtils,
+        locale: undefined,
+    },
+};
+
+export const DateInput = props => <Picker PickerComponent={DatePicker} {...props} />;
+export const TimeInput = props => <Picker PickerComponent={TimePicker} {...props} />;
+export const DateTimeInput = props => <Picker PickerComponent={DateTimePicker} {...props} />;
+export const KeyboardDateInput = props => <Picker PickerComponent={KeyboardDatePicker} {...props} />;
+export const KeyboardDateTimeInput = props => <Picker PickerComponent={KeyboardDateTimePicker} {...props} />;
+export const KeyboardTimInput = props => <Picker PickerComponent={KeyboardTimePicker} {...props} />;
