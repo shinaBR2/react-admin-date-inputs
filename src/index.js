@@ -229,7 +229,7 @@ const TimeInput = props => <Picker PickerComponent={TimePicker} {...props} />;
 const DateTimeInput = props => <Picker PickerComponent={DateTimePicker} {...props} />;
 const KeyboardDateInput = props => <Picker PickerComponent={KeyboardDatePicker} {...props} />;
 const KeyboardDateTimeInput = props => <Picker PickerComponent={KeyboardDateTimePicker} {...props} />;
-const KeyboardTimInput = props => <Picker PickerComponent={KeyboardTimePicker} {...props} />;
+const KeyboardTimeInput = props => <Picker PickerComponent={KeyboardTimePicker} {...props} />;
 
 DateInput.propTypes = {
     isRequired: PropTypes.bool,
@@ -321,7 +321,7 @@ KeyboardDateTimeInput.propTypes = {
     })
 };
 
-KeyboardTimInput.propTypes = {
+KeyboardTimeInput.propTypes = {
     isRequired: PropTypes.bool,
     label: PropTypes.string,
     onChange: PropTypes.func,
@@ -345,5 +345,5 @@ export {
     DateTimeInput,
     KeyboardDateInput,
     KeyboardDateTimeInput,
-    KeyboardTimInput
+    KeyboardTimeInput
 };
