@@ -146,40 +146,38 @@ const Picker = ({
     }, []);
 
     return (
-      <div className="picker">
-          <MuiPickersUtilsProvider utils={utils || DateFnsUtils} locale={locale}>
-              <PickerComponent
-                id={id}
-                label={<FieldTitle
-                  label={label}
-                  source={source}
-                  resource={resource}
-                  isRequired={isRequired}
-                />}
-                InputLabelProps={{
-                    shrink: true,
-                }}
-                variant={pickerVariant}
-                inputVariant={variant}
-                margin={margin}
-                error={!!(touched && error)}
-                helperText={
-                    <InputHelperText
-                      touched={touched}
-                      error={error}
-                      helperText={helperText}
-                    />
-                }
-                clearLabel={translate('ra.action.clear_input_value')}
-                cancelLabel={translate('ra.action.cancel')}
-                {...options}
-                {...sanitizeRestProps(rest)}
-                value={input.value ? new Date(input.value) : null}
-                onChange={date => handleChange(date)}
-                onBlur={() => input.onBlur(input.value ? new Date(input.value).toISOString() : null)}
-              />
-          </MuiPickersUtilsProvider>
-      </div>
+      <MuiPickersUtilsProvider utils={utils || DateFnsUtils} locale={locale}>
+          <PickerComponent
+            id={id}
+            label={<FieldTitle
+              label={label}
+              source={source}
+              resource={resource}
+              isRequired={isRequired}
+            />}
+            InputLabelProps={{
+                shrink: true,
+            }}
+            variant={pickerVariant}
+            inputVariant={variant}
+            margin={margin}
+            error={!!(touched && error)}
+            helperText={
+                <InputHelperText
+                  touched={touched}
+                  error={error}
+                  helperText={helperText}
+                />
+            }
+            clearLabel={translate('ra.action.clear_input_value')}
+            cancelLabel={translate('ra.action.cancel')}
+            {...options}
+            {...sanitizeRestProps(rest)}
+            value={input.value ? new Date(input.value) : null}
+            onChange={date => handleChange(date)}
+            onBlur={() => input.onBlur(input.value ? new Date(input.value).toISOString() : null)}
+          />
+      </MuiPickersUtilsProvider>
     );
 };
 
