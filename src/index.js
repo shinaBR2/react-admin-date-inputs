@@ -182,14 +182,7 @@ const Picker = ({
 };
 
 Picker.propTypes = {
-    PickerComponent: PropTypes.oneOfType([
-        DatePicker,
-        TimePicker,
-        DateTimePicker,
-        KeyboardDatePicker,
-        KeyboardDateTimePicker,
-        KeyboardTimePicker
-    ]).isRequired,
+    PickerComponent: PropTypes.func.isRequired,
     isRequired: PropTypes.bool,
     label: PropTypes.string,
     onChange: PropTypes.func,
