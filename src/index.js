@@ -120,6 +120,7 @@ const Picker = ({
     defaultValue,
     providerOptions: {utils, locale},
     pickerVariant = 'dialog',
+    stringFormat = 'ISO',
     ...rest
 }) => {
     const translate = useTranslate();
@@ -142,7 +143,7 @@ const Picker = ({
     });
 
     const handleChange = useCallback(value => {
-        Date.parse(value) ? input.onChange(value.toISOString()) : input.onChange(null);
+        Date.parse(value) ? input.onChange(stringFormat === 'ISO' ? value.toISOString() : value.toString()) : input.onChange(null);
     }, []);
 
     return (
@@ -175,7 +176,7 @@ const Picker = ({
             {...sanitizeRestProps(rest)}
             value={input.value ? new Date(input.value) : null}
             onChange={date => handleChange(date)}
-            onBlur={() => input.onBlur(input.value ? new Date(input.value).toISOString() : null)}
+            onBlur={() => input.onBlur(input.value ? (stringFormat === 'ISO' ? new Date(input.value).toISOString() : new Date(input.value).toString()) : null)}
           />
       </MuiPickersUtilsProvider>
     );
@@ -197,7 +198,8 @@ Picker.propTypes = {
     providerOptions: PropTypes.shape({
         utils: PropTypes.func,
         locale: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    })
+    }),
+    stringFormat: PropTypes.string
 };
 
 Picker.defaultProps = {
@@ -237,7 +239,8 @@ DateInput.propTypes = {
     providerOptions: PropTypes.shape({
         utils: PropTypes.func,
         locale: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    })
+    }),
+    stringFormat: PropTypes.string
 };
 
 TimeInput.propTypes = {
@@ -255,7 +258,8 @@ TimeInput.propTypes = {
     providerOptions: PropTypes.shape({
         utils: PropTypes.func,
         locale: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    })
+    }),
+    stringFormat: PropTypes.string
 };
 
 DateTimeInput.propTypes = {
@@ -273,7 +277,8 @@ DateTimeInput.propTypes = {
     providerOptions: PropTypes.shape({
         utils: PropTypes.func,
         locale: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    })
+    }),
+    stringFormat: PropTypes.string
 };
 
 KeyboardDateInput.propTypes = {
@@ -291,7 +296,8 @@ KeyboardDateInput.propTypes = {
     providerOptions: PropTypes.shape({
         utils: PropTypes.func,
         locale: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    })
+    }),
+    stringFormat: PropTypes.string
 };
 
 KeyboardDateTimeInput.propTypes = {
@@ -309,7 +315,8 @@ KeyboardDateTimeInput.propTypes = {
     providerOptions: PropTypes.shape({
         utils: PropTypes.func,
         locale: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    })
+    }),
+    stringFormat: PropTypes.string
 };
 
 KeyboardTimeInput.propTypes = {
@@ -327,7 +334,8 @@ KeyboardTimeInput.propTypes = {
     providerOptions: PropTypes.shape({
         utils: PropTypes.func,
         locale: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    })
+    }),
+    stringFormat: PropTypes.string
 };
 
 export {
