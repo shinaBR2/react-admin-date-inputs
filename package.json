@@ -1,5 +1,5 @@
 {
-  "name": "react-admin-date-inputs",
+  "name": "@shinabr2/react-admin-date-inputs",
   "version": "3.0.27",
   "description": "react-admin-date-inputs",
   "main": "lib/index.js",
@@ -7,7 +7,7 @@
   "homepage": "https://github.com/vascofg/react-admin-date-inputs",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vascofg/react-admin-date-inputs.git"
+    "url": "git+https://github.com/vascofg/react-admin-date-inputs.git"
   },
   "bugs": {
     "url": "https://github.com/vascofg/react-admin-date-inputs/issues"
@@ -54,5 +54,8 @@
     "@date-io/date-fns": "^1.3.13",
     "date-fns": "~2.8.1",
     "@material-ui/pickers": "^3.2.10"
+  },
+  "directories": {
+    "lib": "lib"
   }
 }

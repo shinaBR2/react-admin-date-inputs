@@ -1,3 +1,7 @@
+# Please read first
+
+Read [this github issue](https://github.com/vascofg/react-admin-date-inputs/issues/42) first to understand that everything I did just publishing this module.
+
 # react-admin-date-inputs
 
 \<DateInput>, \<TimeInput>, \<DateTimeInput> \<KeyboardDateInput/>, \<KeyboardDateTimeInput/> and <KeyboardTimeInput/> components for [React-Admin](https://github.com/marmelab/react-admin).
@@ -7,7 +11,7 @@
 ## Installation
 
 ```
-npm install react-admin-date-inputs --save
+npm install @shinabr2/react-admin-date-inputs --save
 ```
 
 ## Usage
@@ -16,32 +20,50 @@ You have to include an icon font to display the icons on the picker. This is men
 
 ```html
 // on index.html
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+/>
 ```
 
 ```jsx
 import React from 'react';
+import { Edit, TextInput, TabbedForm, FormTab } from 'react-admin';
 import {
-    Edit,
-    TextInput,
-    TabbedForm,
-    FormTab,
-} from 'react-admin'
-import { DateInput, TimeInput, DateTimeInput, KeyBoardDateInput} from 'react-admin-date-inputs';
+  DateInput,
+  TimeInput,
+  DateTimeInput,
+  KeyBoardDateInput
+} from 'react-admin-date-inputs';
 
 export const NewsEdit = (props) => (
   <Edit title={<NewsTitle />} {...props}>
     <TabbedForm>
       <FormTab>
         <LongTextInput source="title" validate={required} />
-        <DateInput source="startDate" label="Start date" options={{ format: 'DD/MM/YYYY' }} />
-        <TimeInput source="startTime" label="Start time" options={{ format: 'HH:mm:ss' }} />
-        <DateTimeInput source="endDate" label="End time" options={{ format: 'DD/MM/YYYY, HH:mm:ss', ampm: false, clearable: true }} />
+        <DateInput
+          source="startDate"
+          label="Start date"
+          options={{ format: 'DD/MM/YYYY' }}
+        />
+        <TimeInput
+          source="startTime"
+          label="Start time"
+          options={{ format: 'HH:mm:ss' }}
+        />
+        <DateTimeInput
+          source="endDate"
+          label="End time"
+          options={{
+            format: 'DD/MM/YYYY, HH:mm:ss',
+            ampm: false,
+            clearable: true
+          }}
+        />
       </FormTab>
     </TabbedForm>
   </Edit>
 );
-
 ```
 
 ## Options prop
