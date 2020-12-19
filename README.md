@@ -1,6 +1,6 @@
 # Please read first
 
-Read [this github issue](https://github.com/vascofg/react-admin-date-inputs/issues/42) first to understand that everything I did just publishing this module.
+Read [this github issue](https://github.com/vascofg/react-admin-date-inputs/issues/42) first to understand that everything I did was just publishing this module.
 
 # react-admin-date-inputs
 
