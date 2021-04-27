@@ -1,6 +1,6 @@
 {
   "name": "@shinabr2/react-admin-date-inputs",
-  "version": "3.0.29",
+  "version": "3.0.30",
   "description": "react-admin-date-inputs",
   "main": "lib/index.js",
   "author": "vascofg",
